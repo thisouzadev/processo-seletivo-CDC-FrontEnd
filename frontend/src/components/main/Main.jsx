@@ -6,6 +6,11 @@ import "./main.css";
 function Main () {
   const [employes, setEmployes] = useState([]);
   const { showModalCreated } = useContext(context);
+  const [id, setId] = useState("");
+  const handleDelete = (id) => {
+    new EmployesService().delete(id);
+    setId(id);
+  };
   useEffect(() => {
     new EmployesService()
       .getEmployes()
@@ -15,10 +20,11 @@ function Main () {
       .catch((err) => {
         console.log(err);
       });
-  }, [showModalCreated]);
+  }, [showModalCreated, id]);
   console.log(employes);
+
   if (employes.length === 0) {
-    return <div>Loading...</div>;
+    return <div className="main"></div>;
   }
   return (
     <Table responsive="sm" striped bordered hover className="main">
@@ -38,7 +44,7 @@ function Main () {
             <td>{employe.salario}</td>
             <td>{employe.data_de_nascimento}</td>
             <td><Button>editar</Button></td>
-            <td><Button>excluir</Button></td>
+            <td><Button onClick={() => { handleDelete(employe.id); }}>excluir</Button></td>
           </tr>
         ))}
       </tbody>

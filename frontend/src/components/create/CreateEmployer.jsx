@@ -19,7 +19,7 @@ function CreateEmployer () {
     }
     new EmployesService()
       .created(nome, cpf, departamento, salario, dataDeNascimento)
-      .then(({ data }) => {
+      .then(() => {
         setShowModalCreated(false);
         setError("");
       }

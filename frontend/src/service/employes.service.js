@@ -26,6 +26,15 @@ class EmployesService {
     });
     return response;
   }
+
+  async delete (id) {
+    const response = await axios({
+      method: "delete",
+      url: `http://localhost:3000/register/${id}`,
+      data: {}
+    });
+    return response;
+  }
 }
 
 export default EmployesService;
