@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
+import context from "../../context/context";
 import EmployesService from "../../service/employes.service";
 import "./main.css";
 function Main () {
   const [employes, setEmployes] = useState([]);
+  const { showModalCreated } = useContext(context);
   useEffect(() => {
     new EmployesService()
       .getEmployes()
@@ -13,7 +15,8 @@ function Main () {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [showModalCreated]);
+  console.log(employes);
   if (employes.length === 0) {
     return <div>Loading...</div>;
   }

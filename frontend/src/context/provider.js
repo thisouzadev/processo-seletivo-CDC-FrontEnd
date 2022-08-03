@@ -1,10 +1,15 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import context from "./context";
 
 function Provider ({ children }) {
+  const [showModalCreated, setShowModalCreated] = useState(false);
+  const [error, setError] = useState(null);
   const contextValue = {
-
+    showModalCreated,
+    setShowModalCreated,
+    error,
+    setError
   };
 
   return (
