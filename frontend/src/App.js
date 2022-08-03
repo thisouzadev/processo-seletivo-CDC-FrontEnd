@@ -1,9 +1,18 @@
-import './App.css';
+import React from "react";
+import "./App.css";
+import Footer from "./components/footer/Footer";
+import Header from "./components/header/Header";
+import Main from "./components/main/Main";
+import Provider from "./context/provider";
 
-function App() {
+function App () {
   return (
     <div className="App">
-     hello
+      <Provider>
+        <Header />
+        <Main />
+        <Footer />
+      </Provider>
     </div>
   );
 }
