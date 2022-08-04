@@ -39,11 +39,11 @@ function Header () {
           <Form.Label htmlFor="">
           Departamento:
             <Form.Select
-              as="select"
+              defaultValue={departamento}
               name="departamento"
               onClick={handleClickDepartamento}>
               <option value="">Selecione</option>
-              <option value="Administrativo">Administrativo</option>
+              <option value="ADMINISTRATIVO">Administrativo</option>
               <option value="Suporte">Suporte</option>
               <option value="TI">TI</option>
             </Form.Select >
