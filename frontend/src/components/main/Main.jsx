@@ -6,19 +6,26 @@ import "./main.css";
 
 function Main () {
   const [employes, setEmployes] = useState([]);
-  const { showModalCreated, setFindById, setShowModalUpdated, showModalUpdated } = useContext(context);
+  const { showModalCreated, setFindById, setShowModalUpdated, showModalUpdated, setShowModalDeleted } = useContext(context);
   const [id, setId] = useState("");
 
-  const handleDelete = (id) => {
-    new EmployesService().delete(id);
-    setId(id);
+  const handleClickDelete = (id) => {
+    new EmployesService()
+      .findById(id)
+      .then(({ data }) => {
+        setFindById(data);
+        setShowModalDeleted(true);
+        setId(id);
+      });
   };
-  const handleClickfindById = (id) => {
+
+  const handleClickUpdate = (id) => {
     new EmployesService()
       .findById(id)
       .then(({ data }) => {
         setFindById(data);
         setShowModalUpdated(true);
+        setId(id);
       });
   };
 
@@ -54,8 +61,8 @@ function Main () {
               <td>{employe.departamento}</td>
               <td>{employe.salario}</td>
               <td>{employe.data_de_nascimento}</td>
-              <td><Button onClick={() => { handleClickfindById(employe.id); }}>editar</Button></td>
-              <td><Button onClick={() => { handleDelete(employe.id); }}>excluir</Button></td>
+              <td><Button onClick={() => { handleClickUpdate(employe.id); }}>editar</Button></td>
+              <td><Button onClick={() => { handleClickDelete(employe.id); }}>excluir</Button></td>
             </tr>
           ))}
         </tbody>

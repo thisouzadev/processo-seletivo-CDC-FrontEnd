@@ -6,6 +6,7 @@ function Provider ({ children }) {
   const [findById, setFindById] = useState(null);
   const [showModalCreated, setShowModalCreated] = useState(false);
   const [showModalUpdated, setShowModalUpdated] = useState(false);
+  const [showModalDeleted, setShowModalDeleted] = useState(false);
   const [error, setError] = useState(null);
   const contextValue = {
     showModalCreated,
@@ -15,7 +16,9 @@ function Provider ({ children }) {
     showModalUpdated,
     setShowModalUpdated,
     findById,
-    setFindById
+    setFindById,
+    showModalDeleted,
+    setShowModalDeleted
   };
 
   return (
