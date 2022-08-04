@@ -14,7 +14,8 @@ function Main () {
     employes,
     setEmployes,
     setEmployesFiltered,
-    employesFiltered
+    employesFiltered,
+    showModalDeleted
   } = useContext(context);
   const [id, setId] = useState("");
 
@@ -48,7 +49,7 @@ function Main () {
       .catch((err) => {
         console.log(err);
       });
-  }, [showModalCreated, id, showModalUpdated]);
+  }, [showModalCreated, id, showModalUpdated, showModalDeleted]);
 
   if (employes.length === 0) {
     return <div className="main"></div>;
