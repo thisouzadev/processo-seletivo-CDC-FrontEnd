@@ -5,7 +5,7 @@ class EmployesService {
   async getEmployes () {
     const response = await axios({
       method: "GET",
-      url: "https://msb-nodejs-cleardb-heroku.herokuapp.com/employes",
+      url: "cdc-card.herokuapp.com/employes" || "http://localhost:3000/employes",
       data: {}
     });
     return response;
@@ -14,7 +14,7 @@ class EmployesService {
   async created (nome, cpf, departamento, salario, data_de_nascimento) {
     const response = await axios({
       method: "POST",
-      url: "https://msb-nodejs-cleardb-heroku.herokuapp.com/register",
+      url: "cdc-card.herokuapp.com/register" || "http://localhost:3000/register",
       data: {
         nome,
         cpf,
@@ -29,7 +29,7 @@ class EmployesService {
   async delete (id) {
     const response = await axios({
       method: "delete",
-      url: `https://msb-nodejs-cleardb-heroku.herokuapp.com/register/${id}`,
+      url: `cdc-card.herokuapp.com/register/${id}` || `http://localhost:3000/register/${id}`,
       data: {}
     });
     return response;
@@ -38,7 +38,7 @@ class EmployesService {
   async update (id, nome, cpf, departamento, salario, data_de_nascimento) {
     const response = await axios({
       method: "put",
-      url: `https://msb-nodejs-cleardb-heroku.herokuapp.com/register/${id}`,
+      url: `cdc-card.herokuapp.com/register/${id}` || `http://localhost:3000/register/${id}`,
       data: {
         nome,
         cpf,
@@ -53,7 +53,7 @@ class EmployesService {
   async findById (id) {
     const response = await axios({
       method: "get",
-      url: `https://msb-nodejs-cleardb-heroku.herokuapp.com/register/${id}`,
+      url: `cdc-card.herokuapp.com/register/${id}` || `http://localhost:3000/register/${id}`,
       data: {}
     });
     return response;
