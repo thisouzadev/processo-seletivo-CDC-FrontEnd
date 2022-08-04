@@ -5,8 +5,17 @@ import EmployesService from "../../service/employes.service";
 import "./main.css";
 
 function Main () {
-  const [employes, setEmployes] = useState([]);
-  const { showModalCreated, setFindById, setShowModalUpdated, showModalUpdated, setShowModalDeleted } = useContext(context);
+  const {
+    showModalCreated,
+    setFindById,
+    setShowModalUpdated,
+    showModalUpdated,
+    setShowModalDeleted,
+    employes,
+    setEmployes,
+    setEmployesFiltered,
+    employesFiltered
+  } = useContext(context);
   const [id, setId] = useState("");
 
   const handleClickDelete = (id) => {
@@ -34,6 +43,7 @@ function Main () {
       .getEmployes()
       .then(({ data }) => {
         setEmployes(data);
+        setEmployesFiltered(data);
       })
       .catch((err) => {
         console.log(err);
@@ -55,7 +65,7 @@ function Main () {
           </tr>
         </thead>
         <tbody>
-          {employes.map((employe) => (
+          {employesFiltered.map((employe) => (
             <tr key={employe.id}>
               <td>{employe.nome}</td>
               <td>{employe.departamento}</td>

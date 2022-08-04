@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import context from "./context";
 
 function Provider ({ children }) {
-  const [findById, setFindById] = useState(null);
+  const [findById, setFindById] = useState("");
+  const [employes, setEmployes] = useState([]);
+  const [employesFiltered, setEmployesFiltered] = useState([]);
   const [showModalCreated, setShowModalCreated] = useState(false);
   const [showModalUpdated, setShowModalUpdated] = useState(false);
   const [showModalDeleted, setShowModalDeleted] = useState(false);
@@ -18,7 +20,11 @@ function Provider ({ children }) {
     findById,
     setFindById,
     showModalDeleted,
-    setShowModalDeleted
+    setShowModalDeleted,
+    employes,
+    setEmployes,
+    employesFiltered,
+    setEmployesFiltered
   };
 
   return (

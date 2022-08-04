@@ -9,9 +9,11 @@ function App () {
   return (
     <div className="App">
       <Provider>
-        <Header />
-        <Main />
-        <Footer />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Header />
+          <Main />
+          <Footer />
+        </div>
       </Provider>
     </div>
   );
