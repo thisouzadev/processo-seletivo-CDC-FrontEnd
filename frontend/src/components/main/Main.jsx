@@ -3,14 +3,25 @@ import { Button, Table } from "react-bootstrap";
 import context from "../../context/context";
 import EmployesService from "../../service/employes.service";
 import "./main.css";
+
 function Main () {
   const [employes, setEmployes] = useState([]);
-  const { showModalCreated } = useContext(context);
+  const { showModalCreated, setFindById, setShowModalUpdated, showModalUpdated } = useContext(context);
   const [id, setId] = useState("");
+
   const handleDelete = (id) => {
     new EmployesService().delete(id);
     setId(id);
   };
+  const handleClickfindById = (id) => {
+    new EmployesService()
+      .findById(id)
+      .then(({ data }) => {
+        setFindById(data);
+        setShowModalUpdated(true);
+      });
+  };
+
   useEffect(() => {
     new EmployesService()
       .getEmployes()
@@ -20,35 +31,36 @@ function Main () {
       .catch((err) => {
         console.log(err);
       });
-  }, [showModalCreated, id]);
-  console.log(employes);
+  }, [showModalCreated, id, showModalUpdated]);
 
   if (employes.length === 0) {
     return <div className="main"></div>;
   }
   return (
-    <Table responsive="sm" striped bordered hover className="main">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Departamento</th>
-          <th>Salário</th>
-          <th>Data de nascimento</th>
-        </tr>
-      </thead>
-      <tbody>
-        {employes.map((employe) => (
-          <tr key={employe.id}>
-            <td>{employe.nome}</td>
-            <td>{employe.departamento}</td>
-            <td>{employe.salario}</td>
-            <td>{employe.data_de_nascimento}</td>
-            <td><Button>editar</Button></td>
-            <td><Button onClick={() => { handleDelete(employe.id); }}>excluir</Button></td>
+    <>
+      <Table responsive="sm" striped bordered hover className="main">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Departamento</th>
+            <th>Salário</th>
+            <th>Data de nascimento</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {employes.map((employe) => (
+            <tr key={employe.id}>
+              <td>{employe.nome}</td>
+              <td>{employe.departamento}</td>
+              <td>{employe.salario}</td>
+              <td>{employe.data_de_nascimento}</td>
+              <td><Button onClick={() => { handleClickfindById(employe.id); }}>editar</Button></td>
+              <td><Button onClick={() => { handleDelete(employe.id); }}>excluir</Button></td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </>
   );
 }
 

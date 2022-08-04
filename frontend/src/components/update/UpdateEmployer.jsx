@@ -1,44 +1,45 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import context from "../../context/context";
 import EmployesService from "../../service/employes.service";
 import Error from "../Error";
-import "./createEmployer.css";
-function CreateEmployer () {
-  const { showModalCreated, setShowModalCreated, setError } = useContext(context);
+import "./updateEmployer.css";
+function UpdateEmployer () {
+  const { showModalUpdated, setShowModalUpdated, setError, findById } = useContext(context);
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [departamento, setDepartamento] = useState("");
   const [salario, setSalario] = useState("");
   const [dataDeNascimento, setDataDeNascimento] = useState("");
 
-  const createdEmployer = () => {
+  useEffect(() => {
+    setNome(findById.nome);
+    setCpf(findById.cpf);
+    setDepartamento(findById.departamento);
+    setSalario(findById.salario);
+    setDataDeNascimento(findById.data_de_nascimento);
+  }, [findById]);
+
+  const UpdateEmployerData = () => {
     if (nome === "" || cpf === "" || departamento === "" || salario === 0 || dataDeNascimento === "") {
       setError("Preencha todos os campos");
       return;
     }
     new EmployesService()
-      .created(nome, cpf, departamento, salario, dataDeNascimento)
+      .update(findById.id, nome, cpf, departamento, salario, dataDeNascimento)
       .then(() => {
+        setShowModalUpdated(false);
         setError("");
-        setNome("");
-        setCpf("");
-        setDepartamento("");
-        setSalario("");
-        setDataDeNascimento("");
-        setShowModalCreated(false);
       })
       .catch((err) => {
-        setError(err.message);
-        console.error(err);
-      }
-      );
+        console.log(err);
+      });
   };
   const handleButtonSubmit = (event) => {
     event.preventDefault();
-    createdEmployer();
+    UpdateEmployerData();
   };
-  console.log(nome, cpf, departamento, salario, dataDeNascimento);
+  console.log(nome, cpf, departamento, salario, dataDeNascimento, findById.nome);
   const cpfMask = value => {
     // https://medium.com/trainingcenter/mascara-de-cpf-com-react-javascript-a07719345c93
     return value
@@ -61,10 +62,13 @@ function CreateEmployer () {
   const handleChangeSalario = (event) => setSalario("R$" + CurrencyMask(event.target.value));
   const handleChangeDataDeNascimento = (event) => setDataDeNascimento(event.target.value);
 
-  const handleClose = () => setShowModalCreated(false);
+  const handleClose = () => setShowModalUpdated(false);
+  if (findById.length === 0 && showModalUpdated === true) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
-    <Modal show={showModalCreated} onHide={handleClose} animation={false}>
+    <Modal show={showModalUpdated} onHide={handleClose} animation={false}>
       <Modal.Title>Novo funcionário</Modal.Title>
       <Form action="" method="post">
         <Form.Group className="mb-3">
@@ -72,8 +76,8 @@ function CreateEmployer () {
           Nome:
             <Form.Control
               type="text"
+              defaultValue={findById.nome}
               name="nome"
-              value={nome}
               onChange={handleChangeNome}
               placeholder="Nome" />
           </Form.Label>
@@ -84,7 +88,7 @@ function CreateEmployer () {
             <Form.Control
               type="text"
               maxLength='14'
-              value={cpf}
+              defaultValue={findById.cpf}
               onChange={handleChangeCpf}
               name="cpf"
               placeholder="CPF" />
@@ -93,9 +97,9 @@ function CreateEmployer () {
         <Form.Group className="mb-3">
           <Form.Label className="label" htmlFor="">
           Departamento:
-            <Form.Select name={departamento}
+            <Form.Select
               onClick={handleClickDepartamento}
-              aria-label="">
+              defaultValue={findById.departamento}>
               <option value="">Selecione</option>
               <option value="Administrativo">Administrativo</option>
               <option value="Suporte">Suporte</option>
@@ -107,7 +111,7 @@ function CreateEmployer () {
           <Form.Label className="label" htmlFor="">
           Salário:
             <Form.Control type="text"
-              value={salario}
+              defaultValue={findById.salario}
               onChange={handleChangeSalario}
               name="salario"
               placeholder="Salário" />
@@ -118,6 +122,7 @@ function CreateEmployer () {
           Data de nascimento:
             <Form.Control
               type="date"
+              defaultValue={findById.data_de_nascimento}
               onChange={handleChangeDataDeNascimento}
               name="data_de_nascimento"
               placeholder="Data de nascimento" />
@@ -131,4 +136,4 @@ function CreateEmployer () {
   );
 }
 
-export default CreateEmployer;
+export default UpdateEmployer;

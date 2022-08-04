@@ -3,13 +3,19 @@ import React, { useState } from "react";
 import context from "./context";
 
 function Provider ({ children }) {
+  const [findById, setFindById] = useState(null);
   const [showModalCreated, setShowModalCreated] = useState(false);
+  const [showModalUpdated, setShowModalUpdated] = useState(false);
   const [error, setError] = useState(null);
   const contextValue = {
     showModalCreated,
     setShowModalCreated,
     error,
-    setError
+    setError,
+    showModalUpdated,
+    setShowModalUpdated,
+    findById,
+    setFindById
   };
 
   return (
