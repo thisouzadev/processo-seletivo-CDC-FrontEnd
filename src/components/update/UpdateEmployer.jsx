@@ -103,7 +103,7 @@ function UpdateEmployer () {
               <option value="">Selecione</option>
               <option value="Administrativo">Administrativo</option>
               <option value="Suporte">Suporte</option>
-              <option value="TI">TI</option>
+              <option value="Tecnologia da Informação">Tecnologia da Informação</option>
             </Form.Select>
           </Form.Label>
         </Form.Group>
